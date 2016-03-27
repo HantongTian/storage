@@ -1,6 +1,6 @@
 runtime! debian.vim
 
-"test1
+"test2
 " line enables syntax highlighting by default.
 if has("syntax")
 	syntax on
