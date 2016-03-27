@@ -1,0 +1,140 @@
+runtime! debian.vim
+
+" line enables syntax highlighting by default.
+if has("syntax")
+	syntax on
+endif
+
+" Uncomment the following to have Vim jump to the last position when
+" reopening a file
+"if has("autocmd")
+"  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+"endif
+
+"*******************************************************************************
+"使用vundle管理插件配置
+filetype off
+set nocompatible
+set rtp+=~/.vim/bundle/vundle
+call vundle#rc()
+"
+"使用vundle管理vundle
+Bundle 'gmarik/vundle'
+
+"在下面添加插件
+"PowerLine 插件 状态栏增强显示
+Bundle 'Lokaltog/vim-powerline'
+Bundle 'taglist.vim'
+Bundle 'The-NERD-tree'
+Bundle 'a.vim'
+Bundle 'winmanager'
+Bundle 'minibufexpl.vim'
+Bundle 'c.vim'
+
+"set laststatus=2
+"set t_Co=256
+"let g:Powline_sysbols='fancy'
+"
+"默认打开Taglist
+""let Tlist_Auto_Open=1
+"设置
+let Tlist_Ctags_Cmd='/usr/bin/ctags'
+let Tlist_Show_One_File=1 "不同时显示多个文件的tag，只显示当前
+let Tlist_Exit_OnlyWindow=1 "若taglist窗口是最后一个,关闭则退出vim
+
+
+"设置左侧窗口显示样式为下面组合
+let g:winManagerWindowLayout='FileExplorer|TagList'
+map <C-w><C-m> :WMToggle<cr>
+
+"配置minibufexpl，结合minibufexpl.vim
+"C-Tab组合，向前循环切换buffer并打开
+let g:miniBufExplMapCTabSwitchBufs=1
+"使用<C-h,j,k,l>切换上下左右窗口
+let g:miniBufExplMapWindowNavVim=1
+"使用<C-箭头>切换
+"let g:miniBufExplMapWindowNavArrows=1
+
+"映射F12在新buffer中打开c/h文件,配套a.vim
+nnoremap <silent> <F12> :A<CR>
+
+"Vundle配置必须开启插件功能
+filetype plugin indent on
+"Brief help of vundle
+"	:bundleList
+"	:BundleInstall
+"	:BundleSerch
+"	:BundleClean
+"	:help vundle
+"End brief help
+"***************************************************************************
+
+" The following are commented out as they cause vim to behave a lot
+" differently from regular Vi. They are highly recommended though.
+set showcmd		" Show (partial) command in status line.
+set showmatch		" Show matching brackets.
+set ignorecase		" Do case insensitive matching
+set smartcase		" Do smart case matching
+"set incsearch		" Incremental search
+set autowrite		" Automatically save before commands like :next and :make
+"set hidden		" Hide buffers when they are abandoned
+set mouse=a		" Enable mouse usage (all modes)
+
+
+"Myself
+set nu	"line Number
+set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
+set termencoding=utf-8
+set encoding=utf-8
+set fileencodings=ucs-bom,utf-8,cp936
+set fileencoding=utf-8
+
+set autoread  	"file autoread when changed
+set completeopt=preview,menu  "代码补全
+set completeopt=longest,menu
+set clipboard+=unnamed	"share clipboard
+set nobackup	"Nerver backup
+
+set confirm		"处理未保存或只读时弹出确认
+set nocompatible  "Use VIM only
+"set autoindent	"自动缩进
+set cindent
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set noexpandtab
+
+set ignorecase	"搜索忽略大小写
+set statusline=%F%m%r%h%w\[FORMAT=%{&ff}]\[TYPE=%Y]\[POS=%l,%v][%p%%]\%{strftime(\"%d/%m/%y\-\%H:%M\")}		"状态行信息
+set laststatus=2  "1 启动显示  2.总是显示
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"高亮显示当前行
+autocmd InsertLeave * se nocul	"用浅色高亮当前行
+autocmd InsertEnter * se cul	"用浅色高亮当前行
+set cursorline
+hi CursorLine cterm=NONE ctermbg=green ctermfg=NONE guibg=NONE guifg=NONE
+hi CursorColumn cterm=NONE ctermbg=red ctermfg=NONE guibg=NONE guifg=NONE
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"常用自动补全
+:inoremap { {<CR>}<ESC>O
+:inoremap } <c-r>=ClosePair('}')<CR>
+:inoremap ( ()<ESC>i
+:inoremap ) <c-r>=ClosePair(')')<CR>
+:inoremap [ []<ESC>i
+:inoremap ] <c-r>=ClosePair(']')<CR>
+:inoremap " ""<ESC>i
+:inoremap ' ''<ESC>i
+function! ClosePair(char)
+	if getline('.')[col('.') - 1]==a:char
+		return "\<Right>"
+	else
+		return a:char
+	endif
+endfunction
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set tags=/usr/src/linux-source/tags
