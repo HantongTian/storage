@@ -161,3 +161,41 @@ imap <ESC><F8> :cp<CR>
 map <F9> :cn<CR>
 imap <ESC><F9> :cn<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""'""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""'""""
+"Cscope 配置
+if has("cscope")
+	set csprg=/usr/bin/cscope	"用指定的cscope的命令
+	"设置cstag命令查找次序：0先cscope再标签文件；1相反
+	set csto=0
+	"使用quickfix窗口显示cscope查找结果
+	set cscopequickfix=s-,c-,d-,i-,t-,e-
+	set nocsverb
+	"若当前目录下有cscope数据库，则添加到vim
+	if filereadable("cscope.out")
+		cs add cscope.out
+	elseif $CSCOPE_DB != ""	"否则，只要环境变量不为空，则添加制定的数据哭到vim
+		cs add $CSCOPE_DB
+	endif
+	set csverb
+endif
+map <F4> :cs add ./cscope.out .<CR><CR><CR> :cs reset<CR>
+imap <F4> <ESC>:cs add ./cscope.out .<CR><CR><CR> :cs reset<CR>
+"映射Cscope查找命令，如下：ctrl+shift+-，然后很快按下命令符c、g等
+map <C-_><C-s> :cs find s <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
+map <C-_><C-g> :cs find g <C-R>=expand("<cword>")<CR><CR>
+map <C-_><C-d> :cs find d <C-R>=expand("<cword>")<CR><CR>
+map <C-_><C-c> :cs find c <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
+map <C-_><C-t> :cs find t <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
+map <C-_><C-e> :cs find e <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
+map <C-_><C-f> :cs find f <C-R>=expand("<cfile>")<CR><CR>
+map <C-_><C-i> :cs find i <C-R>=expand("<cfile>")<CR><CR> :copen<CR><CR>
+imap <C-_><C-s> <ESC>:cs find s <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
+imap <C-_><C-g> <ESC>:cs find g <C-R>=expand("<cword>")<CR><CR>
+imap <C-_><C-d> <ESC>:cs find d <C-R>=expand("<cword>")<CR><CR>
+imap <C-_><C-c> <ESC>:cs find c <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
+imap <C-_><C-t> <ESC>:cs find t <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
+imap <C-_><C-e> <ESC>:cs find e <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
+imap <C-_><C-f> <ESC>:cs find f <C-R>=expand("<cfile>")<CR><CR>
+imap <C-_><C-i> <ESC>:cs find i <C-R>=expand("<cfile>")<CR><CR> :copen<CR><CR>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
