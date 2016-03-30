@@ -1,6 +1,5 @@
 runtime! debian.vim
 
-"test2
 " line enables syntax highlighting by default.
 if has("syntax")
 	syntax on
@@ -55,6 +54,8 @@ let g:miniBufExplMapCTabSwitchBufs=1
 let g:miniBufExplMapWindowNavVim=1
 "使用<C-箭头>切换
 "let g:miniBufExplMapWindowNavArrows=1
+"禁止在不可编辑的窗口（如TagList窗口）中打开选中的buffger
+let g:miniBufExplModSelTarget=1
 
 "映射F12在新buffer中打开c/h文件,配套a.vim
 nnoremap <silent> <F12> :A<CR>
@@ -138,4 +139,25 @@ function! ClosePair(char)
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set tags=/usr/src/linux-source/tags
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"ctags 设置
+"按下F5重新生成tag文件，并更新taglist
+map <F5> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
+imap <F5> <ESC>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
+set tags=tags
+set tags+=./tags "添加当前工作目录下的tags文件
+set tags+=/usr/src/linux-source/tags	"添加源码路径下的tags文件
+"""""""""""""""""""""""""""""""""'""""""""""'"""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"QuickFix 设置
+"按下F7，执行make编译，并打开quickfix窗口，显示编译信息
+map <F7> :make<CR><CR><CR> :copen<CR><CR>
+imap <F7> <ESC>:make<CR><CR><CR> :copen<CR><CR>
+"按下F8，光标移到上一个错误所在行
+map <F8> :cp<CR>
+imap <ESC><F8> :cp<CR>
+"按下F9，光标移到下一个错误所在行
+map <F9> :cn<CR>
+imap <ESC><F9> :cn<CR>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
