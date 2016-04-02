@@ -30,6 +30,10 @@ Bundle 'a.vim'
 Bundle 'winmanager'
 Bundle 'minibufexpl.vim'
 Bundle 'c.vim'
+"自动补全
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'Valloric/ListToggle'
+Bundle 'scrooloose/syntastic'
 
 "set laststatus=2
 "set t_Co=256
