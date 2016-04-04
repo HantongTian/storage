@@ -75,6 +75,13 @@ filetype plugin indent on
 "End brief help
 "***************************************************************************
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"YouCompleteMe配置
+let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_confirm_extra_conf=0	"打开vim，不询问是否加载py配置
+let g:ycm_collect_identifiers_from_tag_files=1	"使用ctags生成的tags
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " The following are commented out as they cause vim to behave a lot
 " differently from regular Vi. They are highly recommended though.
 set showcmd		" Show (partial) command in status line.
@@ -167,6 +174,7 @@ imap <ESC><F9> :cn<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"'""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""'""""
+"在当前目录生成cscope.out：cscope -Rbq
 "Cscope 配置
 if has("cscope")
 	set csprg=/usr/bin/cscope	"用指定的cscope的命令
@@ -178,17 +186,20 @@ if has("cscope")
 	"若当前目录下有cscope数据库，则添加到vim
 	if filereadable("cscope.out")
 		cs add cscope.out
-	elseif $CSCOPE_DB != ""	"否则，只要环境变量不为空，则添加制定的数据哭到vim
+	elseif $CSCOPE_DB != ""	"否则，只要环境变量不为空，则添加制定的数据库到vim
 		cs add $CSCOPE_DB
+	endif	
+	if filereadable("/usr/src/linux-source/cscope.out")
+		cs add /usr/src/linux-source/cscope.out /usr/src/linux-source/
 	endif
 	set csverb
 endif
 map <F4> :cs add ./cscope.out .<CR><CR><CR> :cs reset<CR>
 imap <F4> <ESC>:cs add ./cscope.out .<CR><CR><CR> :cs reset<CR>
 "映射Cscope查找命令，如下：ctrl+shift+-，然后很快按下命令符c、g等
-map <C-_><C-s> :cs find s <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
-map <C-_><C-g> :cs find g <C-R>=expand("<cword>")<CR><CR>
-map <C-_><C-d> :cs find d <C-R>=expand("<cword>")<CR><CR>
+map <C-space><C-s> :cs find s <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
+map <C-space><C-g> :cs find g <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
+map <C-space><C-d> :cs find d <C-R>=expand("<cword>")<CR><CR>
 map <C-_><C-c> :cs find c <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
 map <C-_><C-t> :cs find t <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
 map <C-_><C-e> :cs find e <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
