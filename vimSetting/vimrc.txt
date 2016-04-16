@@ -127,7 +127,7 @@ set laststatus=2  "1 启动显示  2.总是显示
 autocmd InsertLeave * se nocul	"用浅色高亮当前行
 autocmd InsertEnter * se cul	"用浅色高亮当前行
 set cursorline
-hi CursorLine cterm=NONE ctermbg=green ctermfg=NONE guibg=NONE guifg=NONE
+hi CursorLine cterm=NONE ctermbg=black ctermfg=NONE guibg=NONE guifg=NONE
 hi CursorColumn cterm=NONE ctermbg=red ctermfg=NONE guibg=NONE guifg=NONE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
